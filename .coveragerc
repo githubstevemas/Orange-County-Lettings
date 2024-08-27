@@ -1,5 +1,5 @@
 [html]
-directory = ./coverage-repport/
+directory = ./coverage-report/
 
 [report]
 omit =
@@ -8,5 +8,6 @@ omit =
     */apps.py
     */__init__.py
     */admin.py
+    */urls.py
     manage.py
     */settings.py

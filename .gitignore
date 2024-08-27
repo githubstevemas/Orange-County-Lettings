@@ -3,4 +3,4 @@
 .env
 .idea
 flake8-report/
-coverage-repport/
+coverage-report/
