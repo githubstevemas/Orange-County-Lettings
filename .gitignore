@@ -1,3 +1,6 @@
 **/__pycache__
 *.pyc
-venv
+.env
+.idea
+flake8-report/
+coverage-repport/

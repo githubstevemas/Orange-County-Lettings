@@ -1,0 +1,12 @@
+[html]
+directory = ./coverage-repport/
+
+[report]
+omit =
+    */migrations/*
+    */tests/*
+    */apps.py
+    */__init__.py
+    */admin.py
+    manage.py
+    */settings.py
