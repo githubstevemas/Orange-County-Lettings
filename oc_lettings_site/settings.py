@@ -1,6 +1,10 @@
 import os
+
+import sentry_sdk
 from dotenv import load_dotenv
 from pathlib import Path
+
+from sentry_sdk.integrations.django import DjangoIntegration
 
 load_dotenv()
 
@@ -14,7 +18,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+# Sentry settings
+sentry_sdk.init(
+    dsn=os.getenv('dsn'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+)
+
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -29,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lettings',
     'profiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
