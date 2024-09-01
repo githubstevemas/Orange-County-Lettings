@@ -1,80 +1,79 @@
-## Résumé
+<p align="center">
+  <a href="https://o-c-lettings.readthedocs.io/en/latest/?badge=latest">
+    <img src="https://readthedocs.org/projects/o-c-lettings/badge/?version=latest" alt="Documentation Status">
+  </a>
+  <img src="https://github.com/githubstevemas/Orange-County-Lettings/actions/workflows/ci.yml/badge.svg" alt="Build Status">
+  <img src="https://codecov.io/gh/githubstevemas/Orange-County-Lettings/branch/master/graph/badge.svg" alt="Coverage">
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="Python Version">
+</p>
 
-Site web d'Orange County Lettings
 
-## Développement local
+<br>
 
-### Prérequis
+# Orange County Lettings
 
-- Compte GitHub avec accès en lecture à ce repository
-- Git CLI
-- SQLite3 CLI
-- Interpréteur Python, version 3.6 ou supérieure
+Django-based web application designed to manage property lettings and user profiles.
 
-Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
+<br>
 
-### macOS / Linux
+## Features
 
-#### Cloner le repository
+- **Lettings Management:** Manage lettings, including address information, and viewing details for specific lettings.
+- **Custom Error Handling:** Implement custom 404 and 500 error pages with integrated Sentry error reporting.
+- **Automated Testing:** Comprehensive test suite including unit tests for models, views, and URLs to ensure the reliability of the application.
+- **Continuous Integration:** Integrated CI/CD pipeline using GitHub Actions, with checks for code quality, coverage, and linting before deployment.
 
-- `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+<br>
 
-#### Créer l'environnement virtuel
+## Technologies used
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activer l'environnement `source venv/bin/activate`
-- Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
-`which python`
-- Confirmer que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
-- Pour désactiver l'environnement, `deactivate`
+- **[Django](https://www.djangoproject.com/)**: A high-level Python web framework that promotes rapid development and clean, pragmatic design.
+- **[Sentry SDK](https://docs.sentry.io/platforms/python/guides/django/)**: An error tracking tool that helps monitor and fix crashes in real-time, integrated with Django.
+- **[Sphinx](https://www.sphinx-doc.org/en/master/)**: A documentation generator that converts reStructuredText files into various output formats like HTML and PDF.
+- **[Requests](https://docs.python-requests.org/en/latest/)**: A simple HTTP library for Python, used to make HTTP requests within the project.
+- **[SQLParse](https://sqlparse.readthedocs.io/en/latest/)**: A library for parsing and formatting SQL statements, used in database-related operations.
 
-#### Exécuter le site
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pip install --requirement requirements.txt`
-- `python manage.py runserver`
-- Aller sur `http://localhost:8000` dans un navigateur.
-- Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
+<br>
 
-#### Linting
+## How to run
+Once the code has been downloaded, go to the project directory and enter the following commands in terminal
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `flake8`
+*install a new vitual environement :*
+```
+python -m venv env
+```
+*activate the environement :*
+```
+env/Scripts/activate
+``` 
+*install all the depedencies :*
+```
+pip install -r requirements.txt
+```
 
-#### Tests unitaires
+<br>
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pytest`
+> [!NOTE]
+> The commands above are for Windows use. Go to the official [Python documentation](https://docs.python.org/3/tutorial/venv.html) for MacOS or Unix usage.
 
-#### Base de données
+<br>
 
-- `cd /path/to/Python-OC-Lettings-FR`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(Python-OC-Lettings-FR_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from
-  Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
+## Usage
 
-#### Panel d'administration
+*Run the application :*
+```
+python manage.py runserver
+```
+Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-- Aller sur `http://localhost:8000/admin`
-- Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
+<br>
 
-### Windows
+## Admin
 
-Utilisation de PowerShell, comme ci-dessus sauf :
+Open [http://localhost:8000/admin](http://localhost:8000/admin) and connect with user *admin*, password *Abc1234!*
 
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
-- Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+<br>
 
-![Coverage](https://codecov.io/gh/githubstevemas/Orange-County-Lettings/branch/master/graph/badge.svg)
-
+## Contact
+Feel free to [mail me](mailto:mas.ste@gmail.com) for any questions, comments, or suggestions.
