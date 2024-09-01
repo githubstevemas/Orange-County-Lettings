@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          coverage run -m pytest --cov
+          coverage run -m pytest --cov=lettings --cov=profiles
           coverage report
           coverage xml
 
