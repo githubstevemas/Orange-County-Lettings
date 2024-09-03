@@ -1,9 +1,7 @@
 import os
-
 import sentry_sdk
 from dotenv import load_dotenv
 from pathlib import Path
-
 from sentry_sdk.integrations.django import DjangoIntegration
 
 load_dotenv()
@@ -18,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Sentry settings
 sentry_sdk.init(
@@ -28,6 +26,7 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lettings',
     'profiles',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +61,6 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'oc_lettings_site/templates'),
                  os.path.join(BASE_DIR, 'lettings/templates'),
                  os.path.join(BASE_DIR, 'profiles/templates')],
-
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,49 +85,24 @@ DATABASES = {
     }
 }
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.'
-                'UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.'
-                'MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.'
-                'CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.'
-                'NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# AWS S3 Configuration
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_S3_REGION_NAME = 'eu-north-1'
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-
-STORAGES = {
-    'default': {
-        'BACKEND': 'oc_lettings_site.storage_backends.MediaStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'oc_lettings_site.storage_backends.StaticStorage',
-    },
-}
-
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'  # noqa: E231
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'  # noqa: E231
 
 
 # Internationalization
@@ -142,7 +114,11 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATICFILES_DIRS = [BASE_DIR / "static", ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static",]

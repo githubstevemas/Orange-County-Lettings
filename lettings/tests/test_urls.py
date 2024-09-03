@@ -3,7 +3,15 @@ from django.urls import reverse
 
 
 class LettingsUrlTests(TestCase):
+    """
+    Tests for the urls of profiles application.
+    """
+
     def test_wrong_letting_url(self):
+        """
+        Ensures that a wrong letting returns 404 status code.
+        Ensures the 404.html template is used.
+        """
 
         response = self.client.get(
             reverse("lettings:letting", args=[666])

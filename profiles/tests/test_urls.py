@@ -3,7 +3,15 @@ from django.urls import reverse
 
 
 class ProfilesUrlTests(TestCase):
+    """
+    Tests for the urls of profiles application.
+    """
+
     def test_wrong_profile_url(self):
+        """
+        Ensures that a wrong profile returns 404 status code.
+        Ensures the 404.html template is used.
+        """
 
         response = self.client.get(
             reverse('profiles:profile', args=[666])
