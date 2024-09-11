@@ -13,7 +13,6 @@ def custom_404(request, exception):
     error page using the '404.html' template
     """
 
-    sentry_sdk.capture_message("Page not found")
     return render(request, '404.html', status=404)
 
 

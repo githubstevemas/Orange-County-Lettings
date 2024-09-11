@@ -33,24 +33,57 @@ Django-based web application designed to manage property lettings and user profi
 - **[Requests](https://docs.python-requests.org/en/latest/)**: A simple HTTP library for Python, used to make HTTP requests within the project.
 - **[SQLParse](https://sqlparse.readthedocs.io/en/latest/)**: A library for parsing and formatting SQL statements, used in database-related operations.
 
+<br>
+
+## Prerequisites
+
+- [Github](https://www.github.com) to clone the project.
+- [Sentry](https://www.sentry.io) for monitoring and error traking.
+- [Docker](https://www.docker.com) for containerized deployment.
+- [AWS](https://www.aws.com) (or any other) to host.
+
+<br>
+
+## Install and configuration
+
+
+*Clone the repository :*
+```
+git clone https://github.com/githubstevemas/Orange-County-Lettings.git
+cd Orange-County-Lettings
+```
+
+*Install a new vitual environement and activate :*
+```
+python -m venv env
+env/Scripts/activate
+```
+
+*Install all the depedencies :*
+```
+pip install -r requirements.txt
+```
+
+*Setup Environment Variables :*
+
+Ensure you have a ``.env`` file or set environment variables like SECRET_KEY and Sentry DSN (If you don't have a Sentry account, sign up at [sentry.io](https://www.sentry.io) and create a new Django project in your Sentry dashboard).
+
+*run Database Migrations :*
+```
+python manage.py migrate
+```
 
 <br>
 
 ## How to run
-Once the code has been downloaded, go to the project directory and enter the following commands in terminal
+*Once the project configuration is completed you can execute the following commands in the project folder to start server :*
+```
+python manage.py runserver
+```
 
-*install a new vitual environement :*
-```
-python -m venv env
-```
-*activate the environement :*
-```
-env/Scripts/activate
-``` 
-*install all the depedencies :*
-```
-pip install -r requirements.txt
-```
+Now, visit [http://127.0.0.1:8000](http://127.0.0.1:8000) to view the app locally.
+
+
 
 <br>
 
@@ -58,6 +91,7 @@ pip install -r requirements.txt
 > The commands above are for Windows use. Go to the official [Python documentation](https://docs.python.org/3/tutorial/venv.html) for MacOS or Unix usage.
 
 <br>
+
 
 ## Usage
 
@@ -74,6 +108,74 @@ Open [http://localhost:8000](http://localhost:8000) in your browser.
 Open [http://localhost:8000/admin](http://localhost:8000/admin) and connect with user *admin*, password *Abc1234!*
 
 <br>
+
+
+## Run Tests
+
+*Before running the tests, ensure all dependencies are installed and migrations are applied. Then, run the following command :*
+```
+coverage run -m pytest -s
+coverage rpport
+```
+This will execute all tests found in the directories within the app and displays the code coverage rate.
+
+<br>
+
+
+## Running Flake8
+
+*You can run flake8 to check your code for any style violations :*
+```
+flake8 .
+```
+This will check all the files for PEP8 compliance and other issues.
+
+<br>
+
+## Deploy
+
+The CI/CD pipeline will run automatically for every commit in the master branch using Github Actions and the ``ci.yml`` file present locally :
+- Flake8 and tests are run to verify that the code is robust and error-free (80% code coverage is required).
+- Then, using the ``Dockerfile``, a Docker image will be created and transferred to Docker Hub.
+- Finally the application is deployed on AWS.
+
+> [!NOTE]
+> To ensure successful deployment, the following *GitHub Secrets* must be defined in the repository settings:
+> - ``SECRET_KEY`` : Django secret key used for security.
+> - ``DOCKER_HUB_USERNAME`` and ``DOCKER_HUB_PASSWORD`` : Credentials for Docker Hub.
+> - ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` : Credentials for AWS IAM user with appropriate permissions for Elastic Beanstalk and S3.
+>   
+> **AWS Settings**:
+> - The **Elastic Beanstalk** environment must be configured to pull the latest Docker image from Docker Hub.
+> - Ensure that the **Elastic Beanstalk** application name (``oc_lettings``) and environment name (``oc-lettings-env``) are correctly set.
+> - The **AWS region** used in the deployment is ``eu-north-1``, as defined in the ``ci.yml`` file.
+
+<br>
+
+## Troubleshooting
+
+- **500 Internal Server Error :** verify that the SECRET_KEY is not missing or incorrectly set.
+- **Database Migration Issues :** run python ``manage.py migrate to apply`` the database migrations.
+- **Static Files Not Loading :** ensure that collectstatic has been run successfully.
+- **Deployment Failure :** ensure that the AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, DOCKER_HUB_USERNAME, and DOCKER_HUB_PASSWORD are properly configured in GitHub Secrets.
+
+<br>
+
+## Changelog
+
+### [Version 2.0]
+- Reorganizing code into several separate applications.
+- Moving site HTML files into specific template folders with each application.
+- Fixing linting errors.
+- Handling 404 and 500 errors.
+- Code documentation.
+- Setting up unit tests.
+- Application monitoring and tracking errors via Sentry.
+- Setting up a deployment pipeline.
+
+<br>
+
+This project is a fork of [Python-OC-Lettings-FR](OpenClassrooms-Student-Center/Python-OC-Lettings-FR).
 
 ## Contact
 Feel free to [mail me](mailto:mas.ste@gmail.com) for any questions, comments, or suggestions.

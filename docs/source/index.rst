@@ -13,7 +13,9 @@ Welcome to the official documentation for the OC Lettings project. This document
 
    description
    features
-   technologies used
-   installation
-   usage
-   contact
+   install and usage
+   test and linting
+   deploy
+   troubleshooting
+   changelog
+   about

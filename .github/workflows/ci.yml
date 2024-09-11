@@ -12,8 +12,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps:
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      DJANGO_SETTINGS_MODULE: oc_lettings_site.settings
 
+    steps:
       - name: Set environment variables
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
@@ -33,18 +36,36 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run flake8
-        run: |
-          flake8 .
+        run: flake8 .
 
       - name: Run tests with coverage
-        run: |
-          pytest --cov
+        run: pytest --cov
 
       - name: Check coverage
-        run: |
-          coverage report --fail-under=80
+        run: coverage report --fail-under=80
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t stevems/oc_lettings:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u stevems --password-stdin
+          docker push stevems/oc_lettings:latest
+
+      - name: Deploy to Render
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"

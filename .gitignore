@@ -4,3 +4,4 @@
 .idea
 flake8-report/
 coverage-report/
+.coverage
