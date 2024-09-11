@@ -7,6 +7,8 @@ Troubleshooting
 
 - 500 Internal Server Error:
     Verify that the SECRET_KEY is not missing or incorrectly set.
+- 400 Error :
+    Verify that ALLOWED_HOST in settings.py is not missing or incorrectly set.
 - Database Issues:
     Run python ``manage.py migrate to apply`` the database migrations.
 - Static Files Not Loading:
