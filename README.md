@@ -40,7 +40,7 @@ Django-based web application designed to manage property lettings and user profi
 - [Github](https://www.github.com) to clone the project.
 - [Sentry](https://www.sentry.io) for monitoring and error traking.
 - [Docker](https://www.docker.com) for containerized deployment.
-- [AWS](https://www.aws.com) (or any other) to host.
+- [Render](https://www.render.com) (or any other) to host.
 
 <br>
 
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 *Setup Environment Variables :*
 
-Ensure you have a ``.env`` file or set environment variables like SECRET_KEY and Sentry DSN (If you don't have a Sentry account, sign up at [sentry.io](https://www.sentry.io) and create a new Django project in your Sentry dashboard).
+In the ``.env`` file set environment variables like SECRET_KEY, Sentry DSN (If you don't have a Sentry account, sign up at [sentry.io](https://www.sentry.io) and create a new Django project in your Sentry dashboard), and your host id.
 
 *run Database Migrations :*
 ```
@@ -137,27 +137,24 @@ This will check all the files for PEP8 compliance and other issues.
 The CI/CD pipeline will run automatically for every commit in the master branch using Github Actions and the ``ci.yml`` file present locally :
 - Flake8 and tests are run to verify that the code is robust and error-free (80% code coverage is required).
 - Then, using the ``Dockerfile``, a Docker image will be created and transferred to Docker Hub.
-- Finally the application is deployed on AWS.
+- Finally the application is deployed on Render.
 
 > [!NOTE]
 > To ensure successful deployment, the following *GitHub Secrets* must be defined in the repository settings:
 > - ``SECRET_KEY`` : Django secret key used for security.
 > - ``DOCKER_HUB_USERNAME`` and ``DOCKER_HUB_PASSWORD`` : Credentials for Docker Hub.
-> - ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` : Credentials for AWS IAM user with appropriate permissions for Elastic Beanstalk and S3.
->   
-> **AWS Settings**:
-> - The **Elastic Beanstalk** environment must be configured to pull the latest Docker image from Docker Hub.
-> - Ensure that the **Elastic Beanstalk** application name (``oc_lettings``) and environment name (``oc-lettings-env``) are correctly set.
-> - The **AWS region** used in the deployment is ``eu-north-1``, as defined in the ``ci.yml`` file.
+> - ``RENDER_SERVICE_ID`` and ``RENDER_API_KEY`` : Credentials for Render.
+> - Also, the Render environment in your Dashboard must be configured.
 
 <br>
 
 ## Troubleshooting
 
 - **500 Internal Server Error :** verify that the SECRET_KEY is not missing or incorrectly set.
+- **400 Error :** verify that ALLOWED_HOST in ``settings.py`` is not missing or incorrectly set.
 - **Database Migration Issues :** run python ``manage.py migrate to apply`` the database migrations.
 - **Static Files Not Loading :** ensure that collectstatic has been run successfully.
-- **Deployment Failure :** ensure that the AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, DOCKER_HUB_USERNAME, and DOCKER_HUB_PASSWORD are properly configured in GitHub Secrets.
+- **Deployment Failure :** ensure that the RENDER_SERVICE_ID, DOCKER_HUB_USERNAME, and DOCKER_HUB_PASSWORD are properly configured in GitHub Secrets.
 
 <br>
 

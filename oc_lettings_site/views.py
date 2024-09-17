@@ -50,4 +50,4 @@ def trigger_error(request):
         An beautifull error!
     """
     error = 1 / 0
-    return HttpResponse("Error.")
+    return HttpResponse(f"Error. {error}")
