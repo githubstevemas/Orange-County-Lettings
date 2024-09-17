@@ -18,4 +18,6 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     # Route for the Django admin interface
     path('admin/', admin.site.urls),
+    # Route for sentry test
+    path('sentry-debug/', views.trigger_error),
 ]
